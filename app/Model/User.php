@@ -8,9 +8,17 @@ class User extends Model implements IdentityInterface
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-        'name',
         'login',
-        'password'
+        'password',
+        'name',
+        'surname',
+        'patronym',
+        'gender',
+        'birth_date',
+        'address',
+        'position',
+        'faculty_id',
+        'role_id'
     ];
     protected static function booted()
     {
@@ -33,6 +41,6 @@ class User extends Model implements IdentityInterface
     public function attemptIdentity(array $credentials)
     {
         return self::where(['login' => $credentials['login'],
-        'password' => md5($credentials['password'])])->first();
+            'password' => md5($credentials['password'])])->first();
     }
 }
