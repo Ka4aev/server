@@ -7,7 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/server/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/core/Src" isTestSource="false" packagePrefix="Src\" />
       <excludeFolder url="file://$MODULE_DIR$/server/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
