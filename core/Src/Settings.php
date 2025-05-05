@@ -23,6 +23,10 @@ class Settings
     {
         return '/' . $this->path['views'] ?? '';
     }
+    public function getDbSetting(): array
+    {
+        return $this->db ?? [];
+    }
 }
 //Класс Settings в целом похож на класс Application. В нем содержится массив $_settings
 //хранящий массив с настройками приложения. Доступ к этим настройкам также
