@@ -1,0 +1,22 @@
+{
+    "name": "ka4aev/server",
+    "description": "practika po servery",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ka4aev",
+            "email": "staskachaev205@mail.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4 | ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "core/Src/",
+            "": "app/"
+        }
+    }
+}
