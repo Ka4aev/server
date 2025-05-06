@@ -1,11 +1,11 @@
 {
     "name": "ka4aev/server",
-    "description": "practika po servery",
+    "description": "practika",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "Ka4aev",
+            "name": "ka4aev",
             "email": "staskachaev205@mail.ru"
         }
     ],

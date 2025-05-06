@@ -7,25 +7,22 @@ use FastRoute\RouteParser\Std;
 use FastRoute\DataGenerator\MarkBased;
 use FastRoute\Dispatcher\MarkBased as Dispatcher;
 use Src\Traits\SingletonTrait;
-
 class Route
 {
-    // Используем методы трейта
+    //Используем методы трейта
     use SingletonTrait;
 
-    // Свойство для хранения текущего маршрута
+    //Свойство для хранения текущего маршрута
     private string $currentRoute = '';
     private $currentHttpMethod;
 
-    // Свойство для префикса для всех маршрутов
+    //Свойство для префикса для всех маршрутов
     private string $prefix = '';
 
-    // Классы для использования внешнего маршрутизатора
+    //Классы для использования внешнего маршрутизатора
     private RouteCollector $routeCollector;
 
-    /**
-     * Добавляет маршрут, устанавливает его текущим и возвращает объект
-     */
+    //Добавляет маршрут, устанавливает его текущим и возвращает объект
     public static function add($httpMethod, string $route, array $action): self
     {
         self::single()->routeCollector->addRoute($httpMethod, $route, $action);
@@ -34,18 +31,14 @@ class Route
         return self::single();
     }
 
-    /**
-     * Добавляет префикс для обозначенных маршрутов
-     */
+    //Добавляет префикс для обозначенных маршрутов
     public static function group(string $prefix, callable $callback): void
     {
         self::single()->routeCollector->addGroup($prefix, $callback);
         Middleware::single()->group($prefix, $callback);
     }
 
-    /**
-     * Конструктор скрыт. Вызывается только один раз
-     */
+    //Конструктор скрыт. Вызывается только один раз
     private function __construct()
     {
         $this->routeCollector = new RouteCollector(new Std(), new MarkBased());
@@ -67,9 +60,7 @@ class Route
         return $this->prefix . $url;
     }
 
-    /**
-     * Добавление middlewares для текущего маршрута
-     */
+    //Добавление middlewares для текущего маршрута
     public function middleware(...$middlewares): self
     {
         Middleware::single()->add($this->currentHttpMethod, $this->currentRoute, $middlewares);
@@ -90,8 +81,8 @@ class Route
         $uri = substr($uri, strlen($this->prefix));
 
         $dispatcher = new Dispatcher($this->routeCollector->getData());
-        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
+        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
                 throw new Error('NOT_FOUND');

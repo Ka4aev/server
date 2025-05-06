@@ -1,5 +1,6 @@
 <?php
 namespace Src;
+
 use Error;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
@@ -21,6 +22,7 @@ class Application
         $this->dbManager = new Capsule();
         //Создаем класс для аутентификации на основе настроек приложения
         $this->auth = new $this->settings->app['auth'];
+
         //Настройка для работы с базой данных
         $this->dbRun();
         //Инициализация класса пользователя на основе настроек приложения
@@ -47,7 +49,6 @@ class Application
     }
     public function run(): void
     {
-//Запуск маршрутизации
         $this->route->start();
     }
 }
