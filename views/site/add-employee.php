@@ -39,10 +39,17 @@
             <input type="text" name="address" required>
         </div>
 
+        <?php
+        $user = app()->auth->user();
+        $isAdmin = $user->role_id == 1;
+        ?>
+
         <div class="form-group">
             <label>Должность *</label>
             <select name="position" required>
+                <?php if ($isAdmin): ?>
                 <option value="decanat">Сотрудник деканата</option>
+                <?php endif; ?>
                 <option value="ped">Педагогический сотрудник</option>
             </select>
         </div>

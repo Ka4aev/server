@@ -12,6 +12,7 @@ Route::add(['GET', 'POST'], '/add-employee', [Controller\Site::class, 'addEmploy
 Route::add('GET', '/employees', [Controller\Site::class, 'employeeList'])->middleware('auth', 'adminOrDecanat');
 
 Route::add(['GET', 'POST'], '/add-discipline', [Controller\Site::class, 'addDiscipline'])->middleware('auth', 'adminOrDecanat');
+Route::add(['GET', 'POST'], '/add-faculty', [Controller\Site::class, 'addFaculty'])->middleware('auth', 'adminOrDecanat');
 Route::add('GET', '/disciplines', [Controller\Site::class, 'disciplineList'])->middleware('auth');
 
 Route::add('GET', '/profile', [Controller\Site::class, 'profile'])->middleware('teacher');

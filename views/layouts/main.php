@@ -75,6 +75,7 @@
                         <option value="">добавить</option>
                         <option value="add-employee">Добавить сотрудника</option>
                         <option value="add-discipline">Добавить дисциплину</option>
+                        <option value="add-faculty">Добавить кафедру</option>
                     </select>
                 </form>
             <?php endif; ?>

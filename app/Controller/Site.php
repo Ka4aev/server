@@ -58,6 +58,7 @@ class Site
         app()->route->redirect(match($request->action) {
             'add-employee' => '/add-employee',
             'add-discipline' => '/add-discipline',
+            'add-faculty' => '/add-faculty',
             'list_employees' => '/employees',
             'list_disciplines' => '/disciplines',
             default => '/'
@@ -89,6 +90,13 @@ class Site
             app()->route->redirect('/disciplines');
         }
         return new View('site.add-discipline');
+    }
+    public function addFaculty(Request $request): string
+    {
+        if ($request->method === 'POST' && Faculty::create($request->all())) {
+            app()->route->redirect('/');
+        }
+        return new View('site.add-faculty');
     }
 
     public function employeeList(Request $request): string
