@@ -1,14 +1,13 @@
 <?php
 namespace Controller;
 
-use Src\Validator\Validator;
-use Model\Post;
 use Src\View;
 use Src\Request;
+use Src\Auth\Auth;
+use Model\Post;
 use Model\User;
 use Model\Discipline;
 use Model\Faculty;
-use Src\Auth\Auth;
 
 class Site
 {

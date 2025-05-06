@@ -62,23 +62,35 @@
         <?php if (!app()->auth::check()): ?>
             <a href="<?= app()->route->getUrl('/login') ?>">ВХОД</a>
         <?php else: ?>
-            <form method="get" action="/handle-action">
-                <select name="action" onchange="this.form.submit()">
-                    <option value=""  >добавить</option>
-                    <option value="add-employee">Добавить сотрудника</option>
-                    <option value="add-discipline">Добавить дисциплину</option>
-                </select>
-            </form>
+            <?php
+            $user = app()->auth->user();
+            $isAdmin = $user->role_id == 1;
+            $isDecanat = $user->position == 'decanat';
+            $isTeacher = $user->position == 'ped';
+            ?>
+
+            <?php if ($isAdmin || $isDecanat): ?>
+                <form method="get" action="/handle-action">
+                    <select name="action" onchange="this.form.submit()">
+                        <option value="">добавить</option>
+                        <option value="add-employee">Добавить сотрудника</option>
+                        <option value="add-discipline">Добавить дисциплину</option>
+                    </select>
+                </form>
+            <?php endif; ?>
 
             <form method="get" action="/handle-action">
                 <select name="action" onchange="this.form.submit()">
-                    <option value=""  >списки</option>
-                    <option value="list_employees">Список сотрудников</option>
+                    <option value="">списки</option>
+                    <?php if ($isAdmin || $isDecanat): ?>
+                        <option value="list_employees">Список сотрудников</option>
+                    <?php endif; ?>
                     <option value="list_disciplines">Список дисциплин</option>
                 </select>
             </form>
-
-            <a href="<?= app()->route->getUrl('/profile') ?>">личный кабинет (<?= app()->auth->user()->name ?>)</a>
+            <?php if ($isTeacher): ?>
+            <a href="<?= app()->route->getUrl('/profile') ?>">Личный кабинет (<?= $user->name ?>)</a>
+            <?php endif; ?>
             <a href="<?= app()->route->getUrl('/logout') ?>">Выход</a>
         <?php endif; ?>
     </nav>
