@@ -6,54 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>УМУ - Учебно-методическое управление</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #1E90FF;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-weight: bold;
-            font-size: 24px;
-            text-decoration: none;
-            color: white;
-        }
-        .nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .nav a {
-            color: white;
-            text-decoration: none;
-        }
-        .nav form {
-            margin: 0;
-        }
-        .nav select {
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: none;
-            background-color: white;
-            cursor: pointer;
-        }
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-        .title {
-            font-size: 28px;
-            margin-bottom: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="/public/styles/main.css">
 </head>
 <body>
 <header class="header">
