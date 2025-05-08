@@ -83,7 +83,6 @@ body {
 }
 
 .form-group input {
-    width: 100%;
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -269,6 +268,7 @@ body {
 }
 
 .employees-list-container {
+    min-width: 300px;
     flex: 3;
     padding: 20px;
     background: #f8f9fa;
@@ -504,4 +504,133 @@ body {
 
 .save-btn:hover {
     background-color: #218838;
+}
+.disciplines-page {
+    padding: 20px;
+}
+
+.filters-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.employees-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.employee-checkbox{
+    display: flex;
+}
+
+.table {
+    margin-top: 20px;
+}
+.disciplines-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.employees-list-container {
+    width: 300px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    margin-left: 20px;
+}
+
+.employees-list-container h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+button, a {
+    padding: 8px 15px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.employees-table {
+    flex-grow: 1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.85em;
+}
+
+.text-muted {
+    color: #6c757d;
+    font-style: italic;
 }
