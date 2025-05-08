@@ -8,13 +8,11 @@ use Src\View;
 
 class FacultyController
 {
-    public function addFaculty(Request $request): void
+    public function addFaculty(Request $request): string
     {
-        if ($request->method === 'POST') {
-            Faculty::create(['name' => $request->name]);
+        if ($request->method === 'POST' && Faculty::create($request->all())) {
             app()->route->redirect('/');
         }
-
-        (new View)->render('site.add-faculty');
+        return new View('site.add-faculty');
     }
 }

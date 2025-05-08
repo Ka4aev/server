@@ -22,17 +22,4 @@ class SiteController
             default => '/'
         });
     }
-
-    public function addFaculty(Request $request): string
-    {
-        if ($request->method === 'POST' && Faculty::create($request->all())) {
-            app()->route->redirect('/');
-        }
-        return new View('site.add-faculty');
-    }
-
-    public function profile(Request $request): string
-    {
-        return new View('site.profile', ['user' => app()->auth->user()]);
-    }
 }

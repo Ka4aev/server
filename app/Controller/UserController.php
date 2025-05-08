@@ -7,7 +7,7 @@ use Model\User;
 use Src\Request;
 use Src\View;
 
-class EmployeeController
+class UserController
 {
     public function addEmployee(Request $request): string
     {
@@ -21,7 +21,7 @@ class EmployeeController
             }
 
             if (User::create([...$request->all(), 'role_id' => 2])) {
-                app()->route->redirect('/');
+                app()->route->redirect('/employees');
             }
         }
 
@@ -31,7 +31,24 @@ class EmployeeController
     }
     public function employeeList(Request $request): string
     {
-        $employees = User::all();
-        return new View('site.employees', ['employees' => $employees]);
+        $selectedFaculties = $request->get('faculty_ids', []);
+
+        // Базовый запрос - исключаем админов
+        $query = User::where('role_id', '!=', 1)->with('faculty');
+
+        if (!empty($selectedFaculties)) {
+            $query->whereIn('faculty_id', $selectedFaculties);
+        }
+
+        return new View('site.employees', [
+            'employees' => $query->get(),
+            'faculties' => Faculty::all(),
+            'selectedFaculties' => $selectedFaculties
+        ]);
+    }
+
+    public function profile(Request $request): string
+    {
+        return new View('site.profile', ['user' => app()->auth->user()]);
     }
 }

@@ -312,7 +312,6 @@ body {
 
 .checkbox-group label {
     display: flex;
-    align-items: center;
     gap: 8px;
     font-weight: normal;
     cursor: pointer;
