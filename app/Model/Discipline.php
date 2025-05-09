@@ -13,6 +13,7 @@ class Discipline extends Model
     protected $fillable = [
         'name',
         'all_time',
+        'completed_time',
         'faculty_id'
     ];
 
@@ -32,6 +33,7 @@ class Discipline extends Model
     // В модели Discipline
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_disciplines', 'discipline_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_disciplines', 'discipline_id', 'user_id')
+            ->withPivot('passed_time');
     }
 }

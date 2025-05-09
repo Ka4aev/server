@@ -2,13 +2,23 @@
     <h1>Профиль сотрудника</h1>
 
     <div class="employee-info">
-        <h2>Иванов Иван Иванович</h2>
-        <p><strong>Должность:</strong> Преподаватель</p>
-        <p><strong>Кафедра:</strong> Информационных технологий</p>
+        <h2><?= htmlspecialchars("{$user->surname} {$user->name} {$user->patronym}") ?></h2>
+        <p><strong>Должность:</strong>
+            <?= match ($user->position) {
+                'ped' => 'Пед.сотрудник',
+                'decanat' => 'Сотрудник деканата',
+                default => $user->position
+            } ?>
+        </p>
+        <p><strong>Кафедра:</strong> <?= htmlspecialchars($user->faculty->name ?? 'Не указана') ?></p>
     </div>
 
     <div class="disciplines-section">
         <h3>Дисциплины</h3>
+
+        <?php if (isset($message)): ?>
+            <div class="alert"><?= $message ?></div>
+        <?php endif; ?>
 
         <table class="disciplines-table">
             <thead>
@@ -20,36 +30,31 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Программирование на Python</td>
-                <td>120</td>
-                <td>
-                    <input type="number" value="40" min="0" max="120" class="hours-input">
-                </td>
-                <td>
-                    <button class="save-btn">Сохранить</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Базы данных</td>
-                <td>90</td>
-                <td>
-                    <input type="number" value="15" min="0" max="90" class="hours-input">
-                </td>
-                <td>
-                    <button class="save-btn">Сохранить</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Веб-разработка</td>
-                <td>80</td>
-                <td>
-                    <input type="number" value="0" min="0" max="80" class="hours-input">
-                </td>
-                <td>
-                    <button class="save-btn">Сохранить</button>
-                </td>
-            </tr>
+            <?php foreach ($user->disciplines as $discipline): ?>
+                <tr>
+                    <td><?= htmlspecialchars($discipline->name) ?></td>
+                    <td><?= $discipline->all_time ?></td>
+                    <td>
+                        <form method="POST" action="/profile">
+                            <input type="hidden" name="discipline_id" value="<?= $discipline->id ?>">
+                            <input type="number"
+                                   name="passed_time"
+                            value="<?= $discipline->pivot->passed_time ?? 0 ?>"
+                            min="0"
+                            max="<?= $discipline->all_time ?>"
+                            class="hours-input">
+                    </td>
+                    <td>
+                        <button type="submit" class="save-btn">Сохранить</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            <?php if ($user->disciplines->isEmpty()): ?>
+                <tr>
+                    <td colspan="4" class="text-muted">Дисциплины не назначены</td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>

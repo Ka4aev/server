@@ -47,4 +47,9 @@ class User extends Model implements IdentityInterface
     {
         return $this->belongsTo(Faculty::class, 'faculty_id');
     }
+    public function disciplines()
+    {
+        return $this->belongsToMany(Discipline::class, 'user_disciplines', 'user_id', 'discipline_id')
+            ->withPivot('passed_time');
+    }
 }

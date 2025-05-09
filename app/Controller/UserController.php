@@ -49,6 +49,37 @@ class UserController
 
     public function profile(Request $request): string
     {
-        return new View('site.profile', ['user' => app()->auth->user()]);
+        $user = app()->auth->user();
+        $user->load('disciplines');
+
+        $message = null;
+
+        if ($request->method === 'POST' && isset($request->discipline_id) && isset($request->passed_time)) {
+            $disciplineId = $request->discipline_id;
+            $passedTime = $request->passed_time;
+
+            $discipline = $user->disciplines->find($disciplineId);
+
+            if ($discipline) {
+                if ($passedTime <= $discipline->all_time) {
+                    $user->disciplines()->updateExistingPivot(
+                        $disciplineId,
+                        ['passed_time' => $passedTime]
+                    );
+                    $message = 'Часы успешно сохранены!';
+                } else {
+                    $message = 'Ошибка: пройденные часы не могут превышать общее время';
+                }
+            } else {
+                $message = 'Ошибка: дисциплина не найдена';
+            }
+
+            $user->load('disciplines');
+        }
+
+        return new View('site.profile', [
+            'user' => $user,
+            'message' => $message
+        ]);
     }
 }

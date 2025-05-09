@@ -15,7 +15,7 @@
             <?php foreach ($employees as $employee): ?>
                 <tr>
                     <td><?= $employee->id ?></td>
-                    <td><?= htmlspecialchars("{$employee->surname} {$employee->name}") ?></td>
+                    <td><?= "{$employee->surname} {$employee->name}" ?></td>
                     <td>
                         <?= match($employee->position) {
                             'ped' => 'Пед. сотрудник',
