@@ -6,31 +6,27 @@ use Model\Faculty;
 use Model\User;
 use Src\Request;
 use Src\View;
-use Src\Validator\Validator;
+use function  Collect\collection;
 
 class UserController
 {
     public function addEmployee(Request $request): string
     {
         if ($request->method === 'POST') {
-            $validator = new Validator($request->all(), [
+            $validation = collection($request->all())->validate([
                 'name' => ['required'],
                 'surname' => ['required'],
                 'birth_date' => ['required', 'date'],
                 'address' => ['required'],
                 'login' => ['required', 'unique:users,login'],
                 'password' => ['required', 'password']
-            ], [
-                'required' => 'Поле :field обязательно для заполнения',
-                'unique' => 'Пользователь с таким логином уже существует',
-                'date' => 'Некорректная дата рождения',
-                'password' => 'Пароль должен содержать минимум 6 символов, включая цифру, заглавную букву и спецсимвол'
             ]);
 
-            if ($validator->fails()) {
+            if ($validation->fails()) {
                 return new View('site.add-employee', [
                     'faculties' => Faculty::all(),
-                    'errors' => $validator->errors()
+                    'errors' => $validation->errors(),
+                    'request' => $request->all()
                 ]);
             }
 
@@ -41,7 +37,8 @@ class UserController
 
         return new View('site.add-employee', [
             'faculties' => Faculty::all(),
-            'errors' => []
+            'errors' => [],
+            'request' => []
         ]);
     }
 
