@@ -1,8 +1,16 @@
 <div class="employee-form-container">
     <h2>Добавить сотрудника деканата</h2>
 
-    <?php if ($message ?? ''): ?>
-        <div class="error-message"><?= $message ?></div>
+    <?php if (!empty($errors)): ?>
+        <div class="error-message">
+            <ul>
+                <?php foreach ($errors as $field => $fieldErrors): ?>
+                    <?php foreach ($fieldErrors as $error): ?>
+                        <li><?= htmlspecialchars($error) ?></li>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     <?php endif; ?>
 
     <form method="post">
