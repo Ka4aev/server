@@ -53,6 +53,11 @@ class DisciplineController
             });
         }
 
+        $search = $request->get('search', '');
+        if ($search !== '') {
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
         $disciplines = $query->get();
 
         return new View('site.disciplines', [
@@ -61,7 +66,8 @@ class DisciplineController
             'employees' => User::where('role_id', '!=', 1)->get(),
             'filters' => [
                 'faculty_id' => $facultyId ?? '',
-                'employee_id' => $employeeId ?? ''
+                'employee_id' => $employeeId ?? '',
+                'search' => $search
             ]
         ]);
     }

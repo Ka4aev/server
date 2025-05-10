@@ -67,8 +67,6 @@ class UserController
                         ['passed_time' => $passedTime]
                     );
                     $message = 'Часы успешно сохранены!';
-                } else {
-                    $message = 'Ошибка: пройденные часы не могут превышать общее время';
                 }
             } else {
                 $message = 'Ошибка: дисциплина не найдена';

@@ -7,7 +7,6 @@
             <?= match ($user->position) {
                 'ped' => 'Пед.сотрудник',
                 'decanat' => 'Сотрудник деканата',
-                default => $user->position
             } ?>
         </p>
         <p><strong>Кафедра:</strong> <?= htmlspecialchars($user->faculty->name ?? 'Не указана') ?></p>

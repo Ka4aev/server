@@ -30,7 +30,6 @@ class Discipline extends Model
     /**
      * Связь с пользователями (многие ко многим через промежуточную таблицу)
      */
-    // В модели Discipline
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_disciplines', 'discipline_id', 'user_id')

@@ -4,9 +4,19 @@
             <h3>Фильтры</h3>
 
             <form method="GET" action="/disciplines">
+
+                <div class="filter-group">
+                    <label>Поиск по названию:</label>
+                    <input type="text"
+                           name="search"
+                           value="<?= isset($filters['search']) ? htmlspecialchars($filters['search']) : '' ?>"
+                           placeholder="Введите название дисциплины"
+                           class="form-control">
+                </div>
+
                 <div class="filter-group">
                     <label>Кафедра:</label>
-                    <select name="faculty_id" class="form-control">
+                    <select name="faculty_id">
                         <option value="">Все кафедры</option>
                         <?php foreach ($faculties as $faculty): ?>
                             <option value="<?= $faculty->id ?>"
@@ -19,7 +29,7 @@
 
                 <div class="filter-group">
                     <label>Сотрудник:</label>
-                    <select name="employee_id" class="form-control">
+                    <select name="employee_id">
                         <option value="">Все сотрудники</option>
                         <?php foreach ($employees as $employee): ?>
                             <option value="<?= $employee->id ?>"
