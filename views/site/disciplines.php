@@ -11,7 +11,8 @@
                            name="search"
                            value="<?= isset($filters['search']) ? htmlspecialchars($filters['search']) : '' ?>"
                            placeholder="Введите название дисциплины"
-                           class="form-control">
+                           class="filter-input"
+                    >
                 </div>
 
                 <div class="filter-group">

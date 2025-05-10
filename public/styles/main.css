@@ -565,14 +565,20 @@ body {
     color: #555;
 }
 
-.filter-group select, .filter-group input {
+.filter-group select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
     background: white;
 }
-
+.filter-input{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
 button, a {
     padding: 8px 15px;
     margin-right: 10px;
