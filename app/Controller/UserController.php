@@ -12,6 +12,9 @@ class UserController
 {
     public function addEmployee(Request $request): string
     {
+        // Проверка: это JSON-запрос (API или тест)
+        $expectsJson = isset($request->headers['Accept']) && str_contains($request->headers['Accept'], 'application/json');
+
         if ($request->method === 'POST') {
             $validation = collection($request->all())->validate([
                 'name' => ['required'],
@@ -23,24 +26,46 @@ class UserController
             ]);
 
             if ($validation->fails()) {
-                return new View('site.add-employee', [
+                if ($expectsJson || php_sapi_name() === 'cli') {
+                    return json_encode([
+                        'status' => 'error',
+                        'errors' => $validation->errors()
+                    ]);
+                }
+
+                return (new View('site.add-employee', [
                     'faculties' => Faculty::all(),
                     'errors' => $validation->errors(),
                     'request' => $request->all()
-                ]);
+                ]))->__toString();
             }
 
             if (User::create([...$request->all(), 'role_id' => 2])) {
+                if ($expectsJson || php_sapi_name() === 'cli') {
+                    return json_encode([
+                        'status' => 'success',
+                        'message' => 'Сотрудник успешно добавлен'
+                    ]);
+                }
+
                 app()->route->redirect('/employees');
             }
         }
 
-        return new View('site.add-employee', [
+        if ($expectsJson || php_sapi_name() === 'cli') {
+            return json_encode([
+                'status' => 'ok',
+                'message' => 'Форма добавления сотрудника'
+            ]);
+        }
+
+        return (new View('site.add-employee', [
             'faculties' => Faculty::all(),
             'errors' => [],
             'request' => []
-        ]);
+        ]))->__toString();
     }
+
 
     public function employeeList(Request $request): string
     {
