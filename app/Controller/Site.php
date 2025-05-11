@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Model\Post;
@@ -20,9 +21,11 @@ class Site
     {
         return new View('site.hello', ['message' => 'hello working']);
     }
+
     public function signup(Request $request): string
     {
         if ($request->method === 'POST') {
+
             $validator = new Validator($request->all(), [
                 'name' => ['required'],
                 'login' => ['required', 'unique:users,login'],
@@ -31,16 +34,21 @@ class Site
                 'required' => 'Поле :field пусто',
                 'unique' => 'Поле :field должно быть уникально'
             ]);
-            if($validator->fails()){
+
+            if ($validator->fails()) {
                 return new View('site.signup',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
             }
-            if (User::create($request->all())) {
+
+            if (User::create([...$request->all(), 'role_id' => 1])) {
                 app()->route->redirect('/login');
+                return false;
             }
+
         }
         return new View('site.signup');
     }
+
     public function login(Request $request): string
     {
         if ($request->method === 'GET') {
