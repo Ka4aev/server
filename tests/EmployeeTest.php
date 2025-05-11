@@ -13,9 +13,6 @@ class EmployeeTest extends TestCase
         // Установка переменной среды
         $_SERVER['DOCUMENT_ROOT'] = '/OSPanel/domains/server.loc';
 
-        // Инициализация базы данных
-        $this->initializeDatabase();
-
         // Создаем экземпляр приложения
         $this->initApplication();
     }
@@ -34,6 +31,7 @@ class EmployeeTest extends TestCase
             'prefix' => '',
         ];
 
+        // Создаем экземпляр приложения с конфигом
         $GLOBALS['app'] = new Src\Application(new Src\Settings([
             'app' => include $_SERVER['DOCUMENT_ROOT'] . '/config/app.php',
             'db' => $dbConfig,
@@ -46,24 +44,6 @@ class EmployeeTest extends TestCase
                 return $GLOBALS['app'];
             }
         }
-    }
-
-    protected function initializeDatabase(): void
-    {
-        $capsule = new Capsule;
-        $capsule->addConnection([
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'database' => 'server',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-        ]);
-
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
     }
 
     /**
