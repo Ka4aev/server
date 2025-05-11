@@ -37,7 +37,7 @@ class UserController
                     'faculties' => Faculty::all(),
                     'errors' => $validation->errors(),
                     'request' => $request->all()
-                ]))->__toString();
+                ]));
             }
 
             if (User::create([...$request->all(), 'role_id' => 2])) {
