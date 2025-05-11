@@ -11,7 +11,7 @@ class SiteTest extends TestCase
      */
     public function testSignup(string $httpMethod, array $userData, string $message): void
     {
-        //Выбираем занятый логин из базы данных
+        // Выбираем занятый логин из базы данных
         if ($userData['login'] === 'login is busy') {
             $userData['login'] = User::get()->first()->login;
         }
@@ -24,24 +24,25 @@ class SiteTest extends TestCase
             ->willReturn($userData);
         $request->method = $httpMethod;
 
-        //Сохраняем результат работы метода в переменную
+        // Сохраняем результат работы метода в переменную
         $result = (new \Controller\Site())->signup($request);
 
         if (!empty($result)) {
-            //Проверяем варианты с ошибками валидации
-            $message = '/' . preg_quote($message, '/') . '/';
-            $this->expectOutputRegex($message);
+            // Проверяем, что возвращаемое сообщение соответствует ожидаемому
+            $this->assertJsonStringEqualsJsonString($message, $result);
             return;
         }
 
-        //Проверяем добавился ли пользователь в базу данных
+        // Проверяем добавился ли пользователь в базу данных
         $this->assertTrue((bool)User::where('login', $userData['login'])->count());
-        //Удаляем созданного пользователя из базы данных
+        // Удаляем созданного пользователя из базы данных
         User::where('login', $userData['login'])->delete();
 
-        //Проверяем редирект при успешной регистрации
-        $this->assertContains($message, headers_list());
+        // Проверяем редирект при успешной регистрации
+        $this->assertContains('Location: /login', headers_list());
     }
+
+
 
 
     //Метод, возвращающий набор тестовых данных
@@ -49,21 +50,22 @@ class SiteTest extends TestCase
     {
         return [
             ['GET', ['name' => '', 'login' => '', 'password' => ''],
-                '<h3></h3>'
+                '{"message": "Signup page"}'
             ],
             ['POST', ['name' => '', 'login' => '', 'password' => ''],
-                '<h3>{"name":["Поле name пусто"],"login":["Поле login пусто"],"password":["Поле password пусто"]}</h3>',
+                '{"name":["Поле name пусто"],"login":["Поле login пусто"],"password":["Поле password пусто"]}'
             ],
             ['POST', ['name' => 'admin', 'login' => 'login is busy', 'password' => 'admin'],
-                '<h3>{"login":["Поле login должно быть уникально"]}</h3>',
+                '{"login":["Поле login должно быть уникально"]}'
             ]
         ];
     }
 
+
     protected function setUp(): void
     {
         //Установка переменной среды
-        $_SERVER['DOCUMENT_ROOT'] = '/OSPanel/domains/pop-it-mvc';
+        $_SERVER['DOCUMENT_ROOT'] = '/OSPanel/domains/server.loc';
 
         //Создаем экземпляр приложения
         $GLOBALS['app'] = new Src\Application(new Src\Settings([

@@ -36,18 +36,19 @@ class Site
             ]);
 
             if ($validator->fails()) {
-                return new View('site.signup',
-                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                return json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
             }
 
             if (User::create([...$request->all(), 'role_id' => 1])) {
                 app()->route->redirect('/login');
-                return false;
+                return '';  // Пустая строка для редиректа
             }
-
         }
-        return new View('site.signup');
+        // Для метода GET или не-POST, возвращаем какой-то стандартный ответ
+        return '{"message": "Signup page"}';  // Добавьте сообщение или пустой JSON
     }
+
+
 
     public function login(Request $request): string
     {
