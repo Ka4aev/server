@@ -122,7 +122,7 @@ class EmployeeTest extends TestCase
                 'surname' => 'User',
                 'birth_date' => '2050-01-01',
                 'address' => 'Test address',
-                'login' => 'login is busy',
+                'login' => 'sts',
                 'password' => '123'
             ],
                 '{"birth_date":["Дата рождения не может быть в будущем"],"password":["Пароль должен содержать минимум 6 символов, включая цифру, заглавную букву и спецсимвол"],"login":["Поле login уже занято"]}'
