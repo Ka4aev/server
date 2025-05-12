@@ -27,6 +27,22 @@ class Settings
     {
         return $this->db ?? [];
     }
+    public function getRoutePath(): string
+    {
+        return '/' . $this->path['routes'] ?? '';
+    }
+    public function getAuthClassName(): string
+    {
+        return $this->app['auth'] ?? '';
+    }
+    public function getIdentityClassName(): string
+    {
+        return $this->app['identity'] ?? '';
+    }
+    public function removeAppMiddleware(string $key): void
+    {
+        unset($this->_settings['app']['routeAppMiddleware'][$key]);
+    }
 }
 //Класс Settings в целом похож на класс Application. В нем содержится массив $_settings
 //хранящий массив с настройками приложения. Доступ к этим настройкам также
