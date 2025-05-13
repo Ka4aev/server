@@ -12,7 +12,7 @@ return [
     ],
     'routeAppMiddleware' => [
         'json' => \Middlewares\JSONMiddleware::class,
-        'auth-api' => \Middlewares\AuthApiMiddleware::class
+        'token' => \Middlewares\AuthApiMiddleware::class
     ],
     'providers' => [
         'kernel' => \Providers\KernelProvider::class,

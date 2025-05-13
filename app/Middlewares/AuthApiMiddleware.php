@@ -1,4 +1,5 @@
 <?php
+
 namespace Middlewares;
 
 use Model\User;
@@ -8,20 +9,35 @@ use Src\View;
 
 class AuthApiMiddleware
 {
-    public function handle(Request $request): void
+    public function handle(Request $request, callable $next = null)
     {
-        $token = $this->getBearerToken($request);
-
-        if (!$token || !$user = User::where('token', $token)->first()) {
-            (new View())->toJSON(['error' => 'Unauthorized'], 401);
+        if ($this->isExcludedRoute($request)) {
+            return $next ? $next($request) : $request;
         }
 
-        Auth::login($user);
+        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? getallheaders()['Authorization'] ?? '';
+
+        if (preg_match('/Bearer\s+(\S+)/', $authHeader, $matches)) {
+            $token = $matches[1];
+            $user = User::where('token', $token)->first();
+
+            if ($user) {
+                Auth::login($user);
+                return $next ? $next($request) : $request;
+            }
+        }
+
+        http_response_code(401);
+        (new View())->toJSON(['error' => 'Unauthorized']);
+        exit();
     }
 
-    protected function getBearerToken(Request $request): ?string
+    private function isExcludedRoute(Request $request): bool
     {
-        $header = $request->headers['Authorization'] ?? '';
-        return preg_match('/Bearer\s+(\S+)/', $header, $matches) ? $matches[1] : null;
+        $excludedRoutes = ['/api/login'];
+
+        $currentRoute = $request->getUri();
+
+        return in_array($currentRoute, $excludedRoutes);
     }
 }
